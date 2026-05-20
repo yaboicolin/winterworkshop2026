@@ -1,0 +1,1256 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AI Winter Workshop</title>
+  <style>
+    :root {
+    --bg: #0b0d12;
+    --bg2: #0f1117;
+    --text: #e6e6eb;
+    --muted: #a4a6b3;
+    --border: #252a3a;
+    --accent: #4cc2ff;
+    --good: #7ee787;
+    --warn: #ffcc66;
+    --bad: #ff6b6b;
+    --focus: #9cdcfe;
+    --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    --primary-text: #071017;
+    --body-gradient-from: #0f1422;
+    --topbar-bg: rgba(11, 13, 18, 0.85);
+    --sidebar-bg: rgba(11, 13, 18, 0.65);
+    --chip-bg: rgba(22, 25, 35, 0.6);
+    --card-bg: linear-gradient(180deg, rgba(27, 32, 48, 0.9), rgba(22, 25, 35, 0.9));
+    --nav-active-bg: rgba(22, 25, 35, 0.75);
+    --nav-hover-bg: rgba(22, 25, 35, 0.5);
+    --badge-bg: rgba(15, 17, 23, 0.35);
+    --surface-bg: rgba(15, 17, 23, 0.55);
+    --callout-bg: rgba(15, 17, 23, 0.35);
+    --prompt-border: rgba(37, 42, 58, 0.9);
+    --btn-hover-border: #3a415a;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+
+    body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+    background: radial-gradient(1200px 600px at 20% 0%, var(--body-gradient-from) 0%, var(--bg) 55%), var(--bg);
+    color: var(--text);
+    }
+
+    .topbar {
+    padding: 14px 22px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    position: sticky;
+    top: 0;
+    backdrop-filter: blur(6px);
+    background: var(--topbar-bg);
+    z-index: 10;
+    }
+
+    .brand {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    min-width: 220px;
+    }
+
+    .brand strong { font-size: 16px; letter-spacing: 0.2px; }
+
+    .chip {
+    border: 1px solid var(--border);
+    padding: 6px 10px;
+    border-radius: 999px;
+    font-size: 13px;
+    color: var(--text);
+    background: var(--chip-bg);
+    }
+    .chip b { color: var(--accent); font-weight: 700; }
+
+    .header-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    }
+
+    .btn {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 7px 10px;
+    border-radius: 8px;
+    font-size: 13px;
+    cursor: pointer;
+    }
+
+    .btn:hover { border-color: var(--btn-hover-border); }
+    .btn:focus { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+    .btn.primary {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--primary-text);
+    font-weight: 700;
+    }
+    .btn.primary:hover { filter: brightness(0.95); }
+
+    .layout {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    min-height: calc(100vh - 58px);
+    }
+
+    .sidebar {
+    border-right: 1px solid var(--border);
+    padding: 14px 10px;
+    position: sticky;
+    top: 58px;
+    height: calc(100vh - 58px);
+    overflow: auto;
+    background: var(--sidebar-bg);
+    }
+
+    .nav-title { color: var(--muted); font-size: 12px; margin: 6px 10px 10px; }
+    .nav-title.mt { margin-top: 14px; }
+
+    .nav button {
+    width: 100%;
+    background: transparent;
+    border: 1px solid transparent;
+    color: var(--muted);
+    text-align: left;
+    padding: 10px 10px;
+    border-radius: 10px;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    }
+
+    .nav button.active {
+    color: var(--text);
+    border-color: var(--border);
+    background: var(--nav-active-bg);
+    }
+    .nav button:hover { color: var(--text); background: var(--nav-hover-bg); }
+
+    .nav-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--muted);
+    font-size: 12px;
+    white-space: nowrap;
+    }
+
+    .badge {
+    border: 1px solid var(--border);
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 12px;
+    color: var(--muted);
+    background: var(--badge-bg);
+    }
+
+    .main { padding: 22px; }
+
+    .card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 18px;
+    max-width: 1100px; /* more usable width */
+    }
+
+    .hidden { display: none; }
+
+    .row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    }
+
+    .section-controls {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+    }
+
+    .time {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    }
+
+    .muted { color: var(--muted); }
+    .status { font-size: 12px; color: var(--muted); }
+
+    .grid2 {
+    display: grid;
+    grid-template-columns: 1fr; /* stack by default */
+    gap: 16px;
+    }
+
+    @media (min-width: 980px) {
+    .grid2 { grid-template-columns: 1fr 1fr; } /* 2-up on wide screens */
+    }
+
+    /* ---------- Prompt blocks (NEW) */
+    .prompt {
+    border: 1px solid var(--border);
+    background: var(--surface-bg);
+    border-radius: 12px;
+    padding: 12px;
+    }
+
+    .prompt-text {
+    margin: 0;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid var(--prompt-border);
+    background: var(--bg2);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    line-height: 1.5;
+
+    /* ✅ WRAP LONG TEXT / NO SIDE SCROLL */
+    white-space: pre-wrap;       /* wraps while preserving line breaks */
+    overflow-wrap: anywhere;     /* breaks very long tokens */
+    word-break: break-word;      /* fallback */
+    }
+
+    .copy-below {
+    margin-top: 10px;
+    width: 100%;
+    text-align: center;
+    font-weight: 700;
+    }
+
+    .callout {
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--accent);
+    padding: 10px 12px;
+    background: var(--callout-bg);
+    border-radius: 10px;
+    
+    }
+
+    .kbd {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    border: 1px solid var(--border);
+    padding: 2px 6px;
+    border-radius: 6px;
+    background: var(--surface-bg);
+    color: var(--muted);
+    }
+
+    .govimg {
+    width: 75%;
+    max-width: 735px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    margin: 16px auto;
+    display: block;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+
+    .mt { margin-top: 12px; }
+    .mb6 { margin-bottom: 6px; }
+    .mt6 { margin-top: 6px; }
+    .fw700 { font-weight: 700; }
+    
+    /* ---- Firestarter stacked copy blocks ---- */
+    .stack { margin-top: 10px; }
+    .label-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin: 10px 0 6px;
+    }
+    .label {
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.2px;
+    }
+    .textbox {
+    white-space: pre-wrap;      /* allow wrapping */
+    word-break: break-word;
+    line-height: 1.35;
+    max-height: 260px;          /* keeps it manageable */
+    overflow: auto;
+    }
+    .copymini {
+    padding: 6px 10px;
+    font-size: 12px;
+    border-radius: 8px;
+    }
+    .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 16px 0;
+    opacity: 0.9;
+    }
+
+    .content-block {
+    max-width: 720px;
+    }
+
+    /* 2x2 grid for phone screenshots */
+    .phone-grid{
+       display: grid;
+       grid-template-columns: repeat(2, minmax(0, 1fr));
+       gap: 16px;
+       align-items: start;
+       }
+
+    /* Phone-like sizing (responsive, prevents huge images) */
+    .phone-shot{
+    width: 100%;
+    max-width: 260px;          /* phone-ish width on desktop */
+    aspect-ratio: 9 / 19.5;    /* iPhone-ish portrait ratio */
+    height: auto;
+    object-fit: cover;         /* fills the phone frame, crops if needed */
+    border-radius: 18px;
+    border: 1px solid var(--border);
+    box-shadow: 0 10px 28px rgba(0,0,0,0.35);
+    background: rgba(255,255,255,0.02);
+    display: none;             /* hidden until loaded */
+    margin: 0 auto;            /* centre each image in its cell */
+    }
+
+    /* On smaller screens, stack into 1 column so it stays readable */
+    @media (max-width: 720px){
+    .phone-grid{
+        grid-template-columns: 1fr;
+    }
+    .phone-shot{
+        max-width: 320px;
+    }
+    }
+
+
+    /* ---------- Light theme — OS default (only when no explicit override) */
+    @media (prefers-color-scheme: light) {
+    :root:not([data-theme="dark"]) {
+        --bg: #f0f2f7;
+        --bg2: #ffffff;
+        --text: #1a1b23;
+        --muted: #5c5e70;
+        --border: #c8ccdb;
+        --accent: #0077cc;
+        --good: #2d7a3e;
+        --warn: #8a6000;
+        --bad: #cc2222;
+        --focus: #0066bb;
+        --primary-text: #ffffff;
+        --body-gradient-from: #dde3f5;
+        --topbar-bg: rgba(240, 242, 247, 0.92);
+        --sidebar-bg: rgba(240, 242, 247, 0.8);
+        --chip-bg: rgba(255, 255, 255, 0.8);
+        --card-bg: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(248, 249, 253, 0.98));
+        --nav-active-bg: rgba(255, 255, 255, 0.85);
+        --nav-hover-bg: rgba(255, 255, 255, 0.6);
+        --badge-bg: rgba(0, 0, 0, 0.06);
+        --surface-bg: rgba(0, 0, 0, 0.04);
+        --callout-bg: rgba(0, 119, 204, 0.06);
+        --prompt-border: rgba(200, 204, 219, 0.9);
+        --btn-hover-border: #a0a5bb;
+    }
+    }
+
+    /* ---------- Light theme — explicit user choice */
+    [data-theme="light"] {
+    --bg: #f0f2f7;
+    --bg2: #ffffff;
+    --text: #1a1b23;
+    --muted: #5c5e70;
+    --border: #c8ccdb;
+    --accent: #0077cc;
+    --good: #2d7a3e;
+    --warn: #8a6000;
+    --bad: #cc2222;
+    --focus: #0066bb;
+    --primary-text: #ffffff;
+    --body-gradient-from: #dde3f5;
+    --topbar-bg: rgba(240, 242, 247, 0.92);
+    --sidebar-bg: rgba(240, 242, 247, 0.8);
+    --chip-bg: rgba(255, 255, 255, 0.8);
+    --card-bg: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(248, 249, 253, 0.98));
+    --nav-active-bg: rgba(255, 255, 255, 0.85);
+    --nav-hover-bg: rgba(255, 255, 255, 0.6);
+    --badge-bg: rgba(0, 0, 0, 0.06);
+    --surface-bg: rgba(0, 0, 0, 0.04);
+    --callout-bg: rgba(0, 119, 204, 0.06);
+    --prompt-border: rgba(200, 204, 219, 0.9);
+    --btn-hover-border: #a0a5bb;
+    }
+
+    /* ---------- iOS-style theme toggle */
+    .theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+    }
+
+    .theme-toggle input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+    }
+
+    .toggle-track {
+    position: relative;
+    width: 48px;
+    height: 28px;
+    background: rgba(120, 120, 128, 0.36);
+    border-radius: 999px;
+    transition: background 0.25s ease;
+    flex-shrink: 0;
+    }
+
+    .theme-toggle input:checked + .toggle-track {
+    background: var(--accent);
+    }
+
+    .toggle-thumb {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 24px;
+    height: 24px;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3), 0 0.5px 1px rgba(0,0,0,0.15);
+    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    z-index: 2;
+    }
+
+    .theme-toggle input:checked + .toggle-track .toggle-thumb {
+    transform: translateX(20px);
+    }
+
+    .toggle-moon, .toggle-sun {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 11px;
+    line-height: 1;
+    z-index: 1;
+    transition: opacity 0.15s ease;
+    pointer-events: none;
+    }
+
+    .toggle-moon { left: 7px;  opacity: 1; }
+    .toggle-sun  { right: 6px; opacity: 0; }
+
+    .toggle-label {
+    font-size: 13px;
+    color: var(--muted);
+    margin-left: 8px;
+    }
+
+    .theme-toggle input:checked + .toggle-track .toggle-moon { opacity: 0; }
+    .theme-toggle input:checked + .toggle-track .toggle-sun  { opacity: 1; }
+
+    /* ---------- Segmented control */
+    .seg-ctrl {
+    display: inline-flex;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    }
+
+    .seg-ctrl button {
+    background: transparent;
+    border: none;
+    border-right: 1px solid var(--border);
+    color: var(--text);
+    padding: 7px 13px;
+    font-size: 13px;
+    font-family: inherit;
+    cursor: pointer;
+    transition: background 0.12s ease;
+    }
+
+    .seg-ctrl button:last-child { border-right: none; }
+    .seg-ctrl button:hover { background: var(--nav-hover-bg); }
+    .seg-ctrl button:focus { outline: 2px solid var(--focus); outline-offset: -2px; position: relative; z-index: 1; }
+
+</style>
+
+
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <strong>AI Winter Workshop</strong>
+      <span class="chip" title="Whole workshop countdown">
+        <b id="globalClock">120:00</b>
+      </span>
+    </div>
+
+    <div class="header-controls">
+      <span class="status" id="globalStatus">Ready</span>
+      <div class="seg-ctrl">
+        <button id="globalStart">Start</button>
+        <button id="globalPause">Pause</button>
+        <button id="globalReset">Reset</button>
+      </div>
+      <label class="theme-toggle" title="Toggle light / dark mode">
+        <input type="checkbox" id="themeToggle" />
+        <span class="toggle-track">
+          <span class="toggle-thumb"></span>
+          <span class="toggle-moon">☾</span>
+          <span class="toggle-sun">☀</span>
+        </span>
+        <span class="toggle-label" id="themeLabel">Dark</span>
+      </label>
+    </div>
+  </header>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="nav-title"></div>
+
+      <nav id="nav" class="nav">
+        <button data-target="welcome" class="active">
+          <span>Welcome</span><span class="nav-meta"><span class="badge">5m</span></span>
+        </button>
+        <button data-target="prepare-copilot" class="badge">
+          <span>Copilot tips & Prep</span><span class="nav-meta"><span class="badge">10m</span></span>
+        </button>
+        <button data-target="firestarter">
+          <span>Firestarter</span><span class="nav-meta"><span class="badge">5m</span></span>
+        </button>
+        <button data-target="copilot">
+          <span>Copilot Power Move</span><span class="nav-meta"><span class="badge">25m</span></span>
+        </button>
+        <button data-target="break">
+          <span>Micro-break</span><span class="nav-meta"><span class="badge">5m</span></span>
+        </button>
+        <button data-target="inspiration">
+          <span>Inspiration</span><span class="nav-meta"><span class="badge">25m</span></span>
+        </button>
+        <button data-target="vibecode">
+          <span>Vibecode inspo</span><span class="nav-meta"><span class="badge">5m</span></span>
+        </button>
+                <button data-target="reflection">
+          <span>Reflection</span><span class="nav-meta"><span class="badge">15m</span></span>
+        </button>
+      </nav>
+
+      <div class="nav-title mt">Tips</div>
+
+      <div class="callout">
+        <div class="muted mb6">Pair roles</div>
+        <div><span class="kbd">Driver</span> types + runs prompts</div>
+        <div><span class="kbd">Navigator</span> critiques, steers, provides snacks</div>
+        <div class="muted mt6">Swap roles between activities</div>
+      </div>
+
+      <div class="callout mt">
+        <div class="muted mb6">Shortcuts</div>
+        <div><span class="kbd">g</span> start/pause global timer</div>
+        <div><span class="kbd">r</span> reset global timer</div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <!-- Welcome -->
+      <section id="welcome" class="card" data-duration="300">
+        <div class="row">
+          <h2>Welcome (5 min)</h2>
+          
+        </div>
+
+        <p>Use the AI as your teammate to ideate and refine your ideas</p>
+        <ul>
+          <li>Optimise for confidence, not correctness</li>
+          <li>Work in pairs – Switch out the driver & navigator between each go</li>
+          <li>Change up any source data or prompts to suit your needs</li>
+          <li>This is a safe space for learning - you can’t break anything</li>
+        </ul>
+        <button class="btn primary" data-nav-next="prepare-copilot">Next: Personalise your Copilot</button>
+        </section>
+
+        <!-- Personalise Copilot -->
+        <section id="prepare-copilot" class="card hidden" data-duration="300">
+        <div class="row">
+        <h2>Refine your Copilot (5min)</h2>
+        </div>
+
+        <p>Open Copilot &gt; Settings &gt; Personalise &gt; Custom Instructions &gt; Edit instructions</p>
+
+        <div class="stack">
+        <div class="label-row">
+        <span class="label">Custom instructions (copy this and personalise for to suit your own work)</span>
+        <button class="btn copymini" data-copy-target="#prep_copilot_instructions">Copy</button>
+        </div>
+
+        <pre id="prep_copilot_instructions" class="textbox">ROLE AND INTENT:
+        Act as a senior transformation delivery and change leader and my shadow strategist.
+        Your role is to sharpen my thinking, not just generate content.
+        Surface blind spots, risks, resistance and second-order consequences.
+        Highlight trade-offs, influence plays and how to pre-wire stakeholders.
+
+        PRIORITY ORDER (apply in this order if there is conflict):
+        1. Clarity and directness
+        2. Commercial usefulness and decision value
+        3. Strategic insight and challenge
+        4. Natural, human tone
+        5. Style preferences
+
+        WRITING RULES:
+        Always write with clear, sharp, direct statements.
+        Always write in Australian English.
+        Avoid em dashes. Use commas, full stops or connective words instead.
+        Avoid contrast pivots like "this isn't X, it's Y". Say the point directly.
+        Eliminate filler and stacked synonyms. Choose the single strongest word.
+        Prioritise the answer first. Add context only if it is valuable.
+        Use frameworks only when they add clarity, not by default.
+        Keep tone executive-ready, conversational, concise and commercially sharp.
+        Avoid consulting fluff or jargon.
+        Allow controlled punch when it strengthens the message.
+        Explain complex ideas in simple, clear language without losing depth.
+
+        THINKING STYLE:
+        Maintain strategic altitude with high commercial awareness.
+        Bring forward-looking, future-ready perspectives.
+        Focus on what matters, not completeness.
+        Pressure-test ideas for real-world execution, not theory.
+        Surface risks, constraints, stakeholder resistance and second-order impacts.
+
+        ANTI-SLOP STANDARD:
+        Write like a real human who thinks before typing.
+        Avoid obvious AI tone or generic phrasing.
+        Do not default to rigid structures or forced bullet lists unless useful.
+        Allow slight imperfection in flow if it improves authenticity.
+        Have an opinion. Take a clear stance.
+        Say something specific, not generic.
+        Optimise for meaning, not polish.
+
+        FINAL CHECK:
+        Before responding:
+        - Is this clear and direct?
+        - Is this commercially useful?
+        - Would this hold up with a senior audience?
+        - Does this sound like a real person, not AI?
+        - If not, refine it.</pre>
+        </div>
+
+        <hr class="divider" />
+
+        <p><b>Also remember:</b> You can sometimes force higher reasoning by using specific wording in your prompts.</p>
+
+        <p><b>Do use:</b></p>
+        <ul>
+            <li>"Think hard about this"</li>
+            <li>"Think deeply about this"</li>
+            <li>"Think carefully"</li>
+        </ul>
+
+        <p><b>Don’t use:</b></p>
+        <ul>
+            <li>"This is critical"</li>
+            <li>"This is very important"</li>
+        </ul>
+
+        <button class="btn primary" data-nav-next="firestarter">Next: Firestarter</button>
+        </section>
+
+
+      <!-- Firestarter START -->
+      <section id="firestarter" class="card hidden" data-duration="600">
+        <div class="row">
+          <h2>AI Firestarter (5 min)</h2>
+          
+        </div>
+
+        <p class="muted">
+          Work in pairs. <b>Copy the messy input</b> first, then copy the <b>prompt</b> below into your AI tool.
+        </p>
+
+        <!-- ===================== -->
+        <!-- Activity 1 -->
+        <!-- ===================== -->
+        <h3>1 - Summarise a messy program update</h3>
+
+        <div class="stack">
+          <div class="label-row">
+            <span class="label">Example messy update provided to you (copy this first)</span>
+            <button class="btn copymini" data-copy-target="#fs_update_data">Copy</button>
+          </div>
+
+          <pre id="fs_update_data"
+            class="textbox">Program Stream 1: Cloud Migration
+  We’ve had sum challenges with the migration process. The team was supposed to complete phase 2 last quater but ran into unexpected compatability issues with legacy systems, which delayed progress. WE’ve now completed 70% of the migration work, but we’re encountering issues with data loss during transfer in some areas—IT is on it to fix ASAP. On top of that, coordination between teams has been a challenge because we’re not aligned on the tool set between departments. Next steps include fixing the outstanding errors and preparing the final test runs, but timelines may slip again.
+
+  Program Stream 2: Cybersecurity Overhaul
+  The cybersecurity enhancements are progressing slower than anticipated due to resource constraints the budget for hiring we initially asked for hasn’t been approved yet. Vendor negotiations haven’t panned out as expected, we’re still seeking Quotes from a vendor that can deliver on threat detection capabilities implementing the basic firewalls updates took more time than it should have due to internal approval bottlenecks. Still there has been some positive movement in the Framework design which is finalised and is now ready for implementation across pilot sites before Real rollout—we estimate a March deployment, but this still To be confirmed.
+
+  Program Stream 3: User Experience Redesign
+  This particular stream is makin good progress overall, though there’s feedback that the redesigned user interface isn’t being well-received by some stakeholders. They claim it oversimplifies key functions that are used often. While 85% of project milestones have been met on time, we need to deal with user acceptance testing Feedback and adjust some elements of the navigation before wider rollout to all gov departments. Workshops planned for 2-3 weeks from now to resolve this additional design work will almost certainly push deadlines out. But on the brighter side training material have alreddy been developed and distributed to affected teams for initial familiarisation.
+
+  Program Stream 4: Data Analytics Implementation
+  Okay so the analytics system is starting to show signs that it’s working but we didn’t factor in how much manual configerations will be needed at first (that was a miss for the scoping phase). The team is working now on reconciling data sources, which are inconsistent atm. Part of this is also about training staff across sites to actually use the dashboards because without buy-in the tool’s adoption will flop. We also found out that 1 data stream from one of the departments isn’t coming through properly—it’s corrupted in transit, probably due to the XML manual transformations they're running over there. Next step is to escalate with dept head but they are not easy to reach alongside continuing the staff training at the same time</pre>
+        </div>
+
+        <div class="stack">
+          <div class="label-row">
+            <span class="label">Prompt (copy this second)</span>
+            <button class="btn copymini" data-copy-target="#fs_update_prompt">Copy</button>
+          </div>
+
+          <pre id="fs_update_prompt" class="textbox">Summarise the program update for a governance forum in 5 bullets:
+  - No jargon
+  - Call out key risks/issues and what is being done
+  - Include any likely timeline impacts
+  - End with 2–3 “asks” for the forum (decisions/support needed)</pre>
+        </div>
+
+        <hr class="divider" />
+
+        <!-- ===================== -->
+        <!-- Activity 2 -->
+        <!-- ===================== -->
+        <h3> 2 - Turn messy bullets into a clean table</h3>
+
+        <div class="stack">
+          <div class="label-row">
+            <span class="label">Messy bullet points provided to you (copy this first)</span>
+            <button class="btn copymini" data-copy-target="#fs_bullets_data">Copy</button>
+          </div>
+
+          <pre id="fs_bullets_data" class="textbox">- cloud mig phase 2 shoulda finished last quarter but got blocked by legacy compat issues
+  - progress about 70% done but data loss during transfer in some areas (IT fixing)
+  - cyber overhaul slowed because hiring budget not approved + vendor quotes still coming
+  - basic firewall updates took longer due to approval bottlenecks
+  - framework design is finalised, pilots soon, rollout maybe March? tbc
+  - UX redesign: some stakeholders say UI oversimplifies key functions, need nav changes
+  - UAT feedback coming in heavy, workshops in 2-3 weeks, deadlines will probably slip
+  - training materials already distributed (some teams started familiarisation)
+  - analytics tool works but manual configs were underestimated (scoping miss)
+  - data sources inconsistent; one department feed corrupted (XML transformations?)
+  - need to escalate to dept head (hard to reach) while also training staff to use dashboards
+  - SteerCo wants weekly reporting but format unclear; ownership of reporting not agreed</pre>
+        </div>
+
+        <div class="stack">
+          <div class="label-row">
+            <span class="label">Prompt (copy this second)</span>
+            <button class="btn copymini" data-copy-target="#fs_bullets_prompt">Copy</button>
+          </div>
+
+          <pre id="fs_bullets_prompt" class="textbox">Convert the bullets into a clean table with:
+  - Suggested columns (with data types)
+  - One row per “item”
+  - Include a “Workstream”, “Issue type” (Risk/Issue/Dependency), “Impact”, “Owner” (suggest), “Status”, “Next step”, “When”
+  Return:
+  1) The recommended schema (columns + data types)
+  2) The populated table in markdown</pre>
+        </div>
+
+        <hr class="divider" />
+
+        <!-- ===================== -->
+        <!-- Activity 3 -->
+        <!-- ===================== -->
+        <h3> 3 - Rewrite a messy risk for the UX redesign workstream</h3>
+
+        <div class="stack">
+          <div class="label-row">
+            <span class="label">Risk provided to you in a meeting chat (copy this first)</span>
+            <button class="btn copymini" data-copy-target="#fs_risk_data">Copy</button>
+          </div>
+
+          <pre id="fs_risk_data"
+            class="textbox">Risk (UX Redesign): Stakeholders are not aligned on what “good” looks like for the new interface and keep giving different feedback every time we show designs. There isn’t a single design authority / sign off person so we’re kinda stuck. This is causing rework already (navigation + key workflows), and we might have to redo more screens after UAT. If that happens we’ll miss the rollout dates for gov departments and the business will lose confidence. Also training material might become outdated if designs keep changing.</pre>
+        </div>
+
+        <div class="stack">
+          <div class="label-row">
+            <span class="label">Prompt (copy this second)</span>
+            <button class="btn copymini" data-copy-target="#fs_risk_prompt">Copy</button>
+          </div>
+
+          <pre id="fs_risk_prompt" class="textbox">Rewrite this as an exec-ready risk in this format:
+        - Cause:
+        - Risk event:
+        - Impact (time/cost/quality/stakeholders):
+        - Current controls:
+        - Proposed mitigations (3–5):
+        - Owner (suggest):
+        - Likelihood / Impact rating (H/M/L) with 1 line justification:
+        - Keep it concise and governance-ready.</pre>
+        </div>
+        <button class="btn primary" data-nav-next="copilot">Next: Copilot Power Move</button>
+
+      </section>
+
+
+      <!-- Copilot Power Move -->
+      <section id="copilot" class="card hidden" data-duration="1500">
+        <div class="row">
+          <h2>Copilot Power Move (25 min)</h2>
+          
+        </div>
+
+        <p>From messy data to a governance-ready view.</p>
+        <p class="muted"><b>Goal:</b> A program sponsor / senior decision maker understands your data in 60 seconds..</p>
+
+        <div class="callout">
+          <div class="fw700 mb6">Use Copilot to walk you through an excel power move</div>
+          <div class="muted">
+          <p>Backround: You are operating in an EPMO on a large tech transformation program. You've collated the forecasted resourcing hours, as provided by the program leads, for resources required to support upcoming delivery.</p>
+          <p>Task: An executive business stakeholder has requested that you provide the resourcing forecast as <b>Full Time Equivalent (FTE)</b> in a format that is 'governance ready' and is easily understandable. The information may be presented during an upcoming Steering Committee meeting.</p>
+          <p>Let's do this: Use the forecasted hours that are provided in the workshop docs folder (the .xlsx file). YOU CHOOSE whether you would like to upload the entire file to Copilot, use the native Excel Copilot, or simply describe your source table to the Copilot app [recommended]. By the end of the activity, you will have produced a nice digestible FTE chart to enable data informed decision making for the client.</p> 
+
+          <p>Tip: Best practice approach is converting the range to a proper table, then using PowerQuery to 'unpivot' the table this is because excel cannot pivot the data in the current human form. Then add the unpivoted data to a data model. Then create a DIM calendar from scratch. To create your DIM calendar, Copilot will give you the code to input into data model editor > advanced editor. Copilot will also give you the 'measures' required for inserting into your DIM calendar. You'll then add the DIM calendar to the data model. Then Create the table relationships and create your new pivot table and charts.</p> </div>
+        </div>
+
+        <div class="mt">
+          <img id="govImg" alt="Governance example" class="govimg" />
+        </div>
+
+        <h3 class="mt">Pair challenge</h3>
+        <ol>
+          <li>Open the 'resourcing dummy data for AI workshop' dataset in Excel</li>
+          <li>Craft your prompt in Copilot. HINT: Describe the table fields as they are (Resource name, Team, Sub team, Program, etc.), then tell Copilot your end goal. Ask Copilot to help you with a basic DimCalendar, DAX measures and data model relationships. </li>
+	      <li>Produce two one-page views: FTE demand, stacked by program for each month, then a chart for JUST the resource demand from the Finance business unit for the month of June, with individual resources on the bottom axis</li>
+        </ol>
+        <button class="btn primary" data-nav-next="break">Next: Break</button>
+      </section>
+
+      <!-- Break -->
+      <section id="break" class="card hidden" data-duration="300">
+        <div class="row">
+          <h2>Micro-break (5 min)</h2>
+          
+        </div>
+        <p>Refresh and reset</p>
+         <button class="btn primary" data-nav-next="inspiration">Next: Inspiration</button>
+      </section>
+
+      <!-- Vibecode -->
+      <section id="vibecode" class="card hidden" data-duration="1800">
+        <div class="row">
+          <h2>Vibecoding. So hot right now.</h2>
+          
+        </div>
+
+        <p class="muted">Tool: <b>https://base44.com/</b>. </p>
+            <p>Base44 is a free, cloud based vibe coding service that is similar to Lovable. This is a no-code user experience. AI writes everything. Working &gt; perfect. The aim is to give the user fast, nice looking proof of concept outputs such as dashboards, websites, apps, etc. [base44 is not on our approved list - please don't try to access base44 on your work machine]. </p>
+        
+        
+        
+          <div class="content-block">
+          <h3 class="mt">
+            I had an idea for a real time web app for program testing status. The prompt I used was:
+          </h3>
+
+          <div class="prompt">
+            <pre class="prompt-text">I’m a program manager working in a PMO. I would like a web app built, where stakeholders from the business can see to the minute updates on how far through the different testing stages we are on the program. We have three main workstreams, one of which is currently in SIT. This one is called HR. Another program stream is in the middle of their UAT testing phase and is called Pay and Leave. The third program is performing dress rehearsals in preparation for UAT and is around 2 months from UAT start. This one is called Cloud Uplift.
+
+            Use dummy data to fill in some numbers and reporting terminology to show what it could look like. Use the openAI black theme as your guide.</pre>
+            <button class="btn copy-below" data-copy>Copy</button>
+           </div>
+
+
+         
+        
+          
+        </div>
+
+        <div class="phone-grid mt">
+        <img id="shot1Img" class="phone-shot" alt="Screenshot 1" />
+        <img id="shot2Img" class="phone-shot" alt="Screenshot 2" />
+        <img id="shot3Img" class="phone-shot" alt="Screenshot 3" />
+        <img id="shot4Img" class="phone-shot" alt="Screenshot 4" />
+        </div>
+        <ol>
+          
+        </ol>
+        <h3>Ideas for future vibe coded web apps to improve your own workflow or your program stakeholders' experience</h3>
+
+          <div class="grid2">
+            <div class="prompt">
+              <pre
+                class="prompt-text">Build a one-page Project Status Dashboard with: RAG by workstream, key milestones, top 3 risks, and an executive summary panel.</pre>
+              <button class="btn copy-below" data-copy>Copy</button>
+            </div>
+
+            <div class="prompt">
+              <pre
+                class="prompt-text">Build a Risk Register Viewer app: filter by category/owner/date, show risk heatmap (likelihood x impact), and export a one-page summary.</pre>
+              <button class="btn copy-below" data-copy>Copy</button>
+            </div>
+
+            <div class="prompt">
+              <pre
+                class="prompt-text">Build a Meeting Notes Summariser: paste notes, output actions/owners/dates, risks, decisions, and a 5-bullet governance-ready update.</pre>
+              <button class="btn copy-below" data-copy>Copy</button>
+            </div>
+
+            <div class="prompt">
+              <pre
+                class="prompt-text">Stretch: add a “Director view” toggle that compresses everything into one screen with 3 insights.</pre>
+              <button class="btn copy-below" data-copy>Copy</button>
+            </div>
+          <button class="btn primary" data-nav-next="reflection">Next: Reflection</button>
+         </div>
+        </section>
+
+      <!-- Inspiration -->
+
+      <section id="inspiration" class="card hidden" data-duration="1500">
+        <div class="row">
+          <h2>Inspo: showcasing where our colleagues are using AI (25 min)</h2>
+          <div class="section-controls">
+            <span class="chip time"><b class="sectionClock">25:00</b></span>
+            <div class="seg-ctrl">
+              <button class="sectionStart">Start</button>
+              <button class="sectionPause">Pause</button>
+              <button class="sectionReset">Reset</button>
+            </div>
+          </div>
+        </div>
+
+
+
+        <!-- Michael Xu -->
+        <div class="callout">
+          <div class="fw700">Showcase 1 — Michael</div>
+          <p class="muted">
+            This one took Michael a lot of iterating and isn't for us to tackle in this session.
+            The goal is to stretch imagination.
+          </p>
+          <ul>
+            <li>Claude Code + VBA automation</li>
+            <li>Automated PoaP generation in Excel</li>
+            <li><b>End-to-end workflow time saver for PMs!</b></li>
+          </ul>
+        </div>
+
+        <!-- Razeen Mahmood -->
+        <div class="callout mt">
+          <div class="fw700">Showcase 2 — Razeen</div>
+          <p class="muted">
+            Razeen is using AI tools to create engaging content with real impact.
+          </p>
+          <ul>
+            <li>Synthesia video creation</li>
+            <li>Plain language commands creating video</li>
+            <li><b>Amazing results.</b></li>
+          </ul>
+        </div>
+        <button class="btn primary" data-nav-next="vibecode">Next: Vibecode</button>
+     </section>
+
+
+      <!-- Reflection -->
+      <section id="reflection" class="card hidden" data-duration="900">
+        <div class="row">
+          <h2>Wrap & Reflection (15 min)</h2>
+          
+        </div>
+
+        <div class="grid2">
+          <div class="callout">
+            <div class="fw700">One thing that surprised me</div>
+            <p class="muted">Write a 1–2 sentence takeaway.</p>
+          </div>
+          <div class="callout">
+            <div class="fw700">One thing I’ll try next week</div>
+            <p class="muted">Name the task + tool + prompt idea.</p>
+          </div>
+          <div class="callout">
+            <div class="fw700">One workflow I want to automate</div>
+            <p class="muted">Describe the input → output. Keep it simple.</p>
+          </div>
+          <div class="callout">
+            <div class="fw700">Shareback</div>
+            <p class="muted">Show your link or screenshot. No explanations needed.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+        // ---------- Utilities
+    const pad2 = (n) => String(n).padStart(2, "0");
+    const fmt = (seconds) => {
+    seconds = Math.max(0, Math.floor(seconds));
+    const m = Math.floor(seconds / 60);
+    const s = seconds % 60;
+    return `${pad2(m)}:${pad2(s)}`;
+    };
+
+    // ---------- Navigation
+    function showSection(id) {
+    document.querySelectorAll("main section").forEach((s) => s.classList.add("hidden"));
+    const el = document.getElementById(id);
+    if (el) el.classList.remove("hidden");
+
+    document.querySelectorAll("#nav button").forEach((b) => b.classList.remove("active"));
+    const btn = document.querySelector(`#nav button[data-target="${id}"]`);
+    if (btn) btn.classList.add("active");
+    }
+
+    document.querySelectorAll("#nav button").forEach((btn) => {
+    btn.addEventListener("click", () => showSection(btn.dataset.target));
+    });
+
+    document.querySelectorAll("[data-nav-next]").forEach((btn) => {
+    btn.addEventListener("click", () => showSection(btn.dataset.navNext));
+    });
+
+    // ---------- Copy buttons (two modes)
+    // Mode A: button inside <pre> with [data-copy] copies that <pre>'s text
+    // Mode B: button with [data-copy-target="#id"] copies the text from that element
+    document.querySelectorAll("[data-copy]").forEach((copyBtn) => {
+    copyBtn.addEventListener("click", async (e) => {
+        const pre = copyBtn.closest(".prompt").querySelector("pre");
+        const text = pre.innerText.replace(/^Copy\n/, "");
+        try {
+        await navigator.clipboard.writeText(text.trim());
+        copyBtn.textContent = "Copied";
+        setTimeout(() => (copyBtn.textContent = "Copy"), 900);
+        } catch {
+        copyBtn.textContent = "Select";
+        setTimeout(() => (copyBtn.textContent = "Copy"), 900);
+        }
+    });
+    });
+
+    document.querySelectorAll("[data-copy-target]").forEach((btn) => {
+    btn.addEventListener("click", async () => {
+        const targetSel = btn.getAttribute("data-copy-target");
+        const targetEl = document.querySelector(targetSel);
+        if (!targetEl) return;
+
+        const text = targetEl.innerText;
+        try {
+        await navigator.clipboard.writeText(text.trim());
+        const old = btn.textContent;
+        btn.textContent = "Copied";
+        setTimeout(() => (btn.textContent = old), 900);
+        } catch {
+        const old = btn.textContent;
+        btn.textContent = "Select";
+        setTimeout(() => (btn.textContent = old), 900);
+        }
+    });
+    });
+
+    // ---------- Governance image loader (optional)
+    (function loadGovImage() {
+    const img = document.getElementById("govImg");
+    if (!img) return;
+
+    img.src = "governance_example.jpg";
+    img.onload = () => { img.style.display = "block"; };
+    img.onerror = () => { img.style.display = "none"; };
+    })();
+
+    // ---------- phone screenshot loaders (optional)
+    function loadImage(imgId, fileName) {
+    const img = document.getElementById(imgId);
+    if (!img) return;
+
+    img.src = fileName;
+    img.onload = () => { img.style.display = "block"; };
+    img.onerror = () => { img.style.display = "none"; };
+    }
+
+    // Call it for your four iPhone screenshots
+    (function loadPhoneShots() {
+    loadImage("shot1Img", "iphone_shot_1.jpg");
+    loadImage("shot2Img", "iphone_shot_2.jpg");
+    loadImage("shot3Img", "iphone_shot_3.jpg");
+    loadImage("shot4Img", "iphone_shot_4.jpg");
+    })();
+
+    // ---------- Global timer (120 minutes)
+    const globalTotal = 120 * 60;
+    let globalRemaining = globalTotal;
+    let globalTick = null;
+
+    const globalClock = document.getElementById("globalClock");
+    const globalStatus = document.getElementById("globalStatus");
+
+    function updateGlobalUI() {
+    globalClock.textContent = fmt(globalRemaining);
+    if (globalRemaining <= 0) {
+        globalStatus.textContent = "Time";
+        globalStatus.style.color = "var(--bad)";
+    }
+    }
+
+    function startGlobal() {
+    if (globalTick) return;
+    globalStatus.textContent = "Running";
+    globalStatus.style.color = "var(--good)";
+    globalTick = setInterval(() => {
+        globalRemaining -= 1;
+        if (globalRemaining <= 0) {
+        globalRemaining = 0;
+        updateGlobalUI();
+        pauseGlobal();
+        } else {
+        updateGlobalUI();
+        }
+    }, 1000);
+    }
+
+    function pauseGlobal() {
+    if (!globalTick) return;
+    clearInterval(globalTick);
+    globalTick = null;
+    globalStatus.textContent = "Paused";
+    globalStatus.style.color = "var(--warn)";
+    }
+
+    function resetGlobal() {
+    pauseGlobal();
+    globalRemaining = globalTotal;
+    globalStatus.textContent = "Ready";
+    globalStatus.style.color = "var(--muted)";
+    updateGlobalUI();
+    }
+
+    document.getElementById("globalStart").addEventListener("click", startGlobal);
+    document.getElementById("globalPause").addEventListener("click", pauseGlobal);
+    document.getElementById("globalReset").addEventListener("click", resetGlobal);
+    updateGlobalUI();
+
+    // ---------- Section timers (manual control)
+    function initSectionTimer(sectionEl) {
+    const duration = parseInt(sectionEl.dataset.duration || "0", 10);
+    const clockEl = sectionEl.querySelector(".sectionClock");
+    const startBtn = sectionEl.querySelector(".sectionStart");
+    const pauseBtn = sectionEl.querySelector(".sectionPause");
+    const resetBtn = sectionEl.querySelector(".sectionReset");
+
+    if (!clockEl || !startBtn) return;
+
+    let remaining = duration;
+    let tick = null;
+
+    const update = () => { clockEl.textContent = fmt(remaining); };
+    update();
+
+    const start = () => {
+        if (tick) return;
+        tick = setInterval(() => {
+        remaining -= 1;
+        if (remaining <= 0) {
+            remaining = 0;
+            update();
+            pause();
+        } else {
+            update();
+        }
+        }, 1000);
+    };
+
+    const pause = () => {
+        if (!tick) return;
+        clearInterval(tick);
+        tick = null;
+    };
+
+    const reset = () => {
+        pause();
+        remaining = duration;
+        update();
+    };
+
+    startBtn.addEventListener("click", start);
+    pauseBtn.addEventListener("click", pause);
+    resetBtn.addEventListener("click", reset);
+    }
+
+    document.querySelectorAll("main section[data-duration]").forEach(initSectionTimer);
+
+    // ---------- Theme toggle
+    (function initTheme() {
+    const checkbox = document.getElementById("themeToggle");
+    const mq = window.matchMedia("(prefers-color-scheme: light)");
+
+    function effectiveTheme() {
+        const saved = localStorage.getItem("theme");
+        if (saved) return saved;
+        return mq.matches ? "light" : "dark";
+    }
+
+    const label = document.getElementById("themeLabel");
+
+    function applyTheme(theme) {
+        document.documentElement.dataset.theme = theme;
+        checkbox.checked = (theme === "light");
+        label.textContent = theme === "light" ? "Light" : "Dark";
+    }
+
+    const saved = localStorage.getItem("theme");
+    if (saved) {
+        applyTheme(saved);
+    } else {
+        checkbox.checked = mq.matches;
+        label.textContent = mq.matches ? "Light" : "Dark";
+    }
+
+    checkbox.addEventListener("change", () => {
+        const next = checkbox.checked ? "light" : "dark";
+        localStorage.setItem("theme", next);
+        applyTheme(next);
+    });
+
+    mq.addEventListener("change", (e) => {
+        if (!localStorage.getItem("theme")) {
+        delete document.documentElement.dataset.theme;
+        checkbox.checked = e.matches;
+        label.textContent = e.matches ? "Light" : "Dark";
+        }
+    });
+    })();
+
+    // ---------- Keyboard shortcuts
+
+    document.addEventListener("keydown", (e) => {
+    if (e.target && ["INPUT", "TEXTAREA"].includes(e.target.tagName)) return;
+
+    if (e.key.toLowerCase() === "g") {
+        if (globalTick) pauseGlobal();
+        else startGlobal();
+    }
+    if (e.key.toLowerCase() === "r") {
+        resetGlobal();
+    }
+    });
+  </script>
+</body>
+
+</html>
+``
