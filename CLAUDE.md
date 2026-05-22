@@ -41,3 +41,21 @@ Everything lives in one file: CSS (`:root` CSS variables for theming), HTML (sec
 | `inspiration` | 25 min | Colleague showcases |
 | `vibecode` | — | Vibe-coding demo + prompt ideas |
 | `reflection` | 15 min | Wrap-up |
+
+## Known Issues
+
+### GitHub Push Authentication
+Pushing to GitHub from this machine requires authentication. Neither SSH keys nor the GitHub CLI (`gh`) are configured. HTTPS pushes fail without credentials.
+
+**Workaround:** Generate a Personal Access Token at github.com/settings/tokens with `repo` scope ticked, then run:
+```
+cd ~/Documents/winterworkshop2026 && git push origin main
+```
+Enter your GitHub username and paste the token as the password when prompted.
+
+**Note:** Do not embed the token in the remote URL (`git remote set-url`) — remove it after use with:
+```
+git remote set-url origin https://github.com/yaboicolin/winterworkshop2026.git
+```
+
+**Long-term fix:** Run `brew install gh && gh auth login` to set up the GitHub CLI — after that, pushes work without tokens.
