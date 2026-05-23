@@ -68,3 +68,8 @@ git remote set-url origin https://github.com/yaboicolin/winterworkshop2026.git
 - Committed and pushed all local changes to `origin/main` (2 commits total, including the prior unpushed KPMG redesign)
 - Resolved GitHub push auth by installing `gh` (`brew install gh`) and completing device login at github.com/login/device
 - Configured `gh` as the git credential helper via `gh auth setup-git`
+- Added "Showcase 3 — Coen: HTML-Mogged by Claude Design" callout to `index6.html` Inspiration section
+- Extended Inspiration section timer from 25 min to 35 min (heading, chip, `data-duration`, sidebar badge)
+- Fixed welcome heading typo: "Winterschool" → "Winter Workshop"
+- Confirmed system timezone is correctly set to `Australia/Sydney` (AEST)
+- Committed and pushed all changes to `origin/main` (commit `4e7484d`), verified via GitHub MCP
