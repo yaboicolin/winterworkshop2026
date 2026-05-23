@@ -59,3 +59,12 @@ git remote set-url origin https://github.com/yaboicolin/winterworkshop2026.git
 ```
 
 **Long-term fix:** Run `brew install gh && gh auth login` to set up the GitHub CLI — after that, pushes work without tokens.
+
+## Session Log
+
+### 2026-05-23
+- Connected Claude Code to GitHub via MCP
+- Identified 2 modified files (`CLAUDE.md`, `index6.html`) and 6 untracked screenshots from the 22 May session
+- Committed and pushed all local changes to `origin/main` (2 commits total, including the prior unpushed KPMG redesign)
+- Resolved GitHub push auth by installing `gh` (`brew install gh`) and completing device login at github.com/login/device
+- Configured `gh` as the git credential helper via `gh auth setup-git`
