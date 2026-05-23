@@ -45,7 +45,9 @@ Files you'll find in the folder for the HTML (lesson body):
 3. PRE-SESSION SETUP
 --------------------------------------------------------------------------------
 
-1. Download all files listed in Section 2 and place them in the same folder
+1. Send around the folder of files listed in Section 2 [EXCEPT for
+   the resource_data_solution.xls file] to the students prior to the session.
+   Also download all the files and place them in the same folder
    on your machine.
 
 2. Open index6.html in a modern browser (Chrome or Edge recommended) and
