@@ -3,29 +3,24 @@ AI WINTER WORKSHOP 2026 — FACILITATOR README
 ================================================================================
 
 This document is for the facilitator running the AI Winter Workshop session.
-Read through the full document before the session begins.
+Read through the full document before running the session.
 
 
 --------------------------------------------------------------------------------
 1. OVERVIEW
 --------------------------------------------------------------------------------
 
-This workshop is an interactive, hands-on session designed to introduce
-attendees to AI concepts and tooling in a practical context. The session is
-delivered via a browser-based interface (index6.html) and includes a resourcing
-data exercise where attendees work with a provided spreadsheet.
-
-The session is self-contained — no internet connection is required once all
-files are downloaded and in place.
-
+This workshop is an interactive, hands-on session designed for
+attendees engage with AI tooling in a practical context, as well as see other tools being used by colleagues. The session is delivered via a browser-based interface (index6.html) and includes a resourcing
+data exercise where attendees work with a provided excel spreadsheet.
 
 --------------------------------------------------------------------------------
 2. FILES REQUIRED TO RUN THE SESSION
 --------------------------------------------------------------------------------
 
-All files must be in the same folder before opening the HTML file.
+All files must be downloaded locally [i.e. in their downloads folder], in the same folder before opening the HTML file.
 
-FROM THE GITHUB REPOSITORY:
+Files you'll find in the folder for the HTML (lesson body):
   - index6.html               Main workshop interface. Open this in a browser
                               to run the session.
   - governance_example.jpg    Supporting image used during the session.
@@ -36,7 +31,6 @@ FROM THE GITHUB REPOSITORY:
   - iphone_shot_3.jpg         Supporting imagery used in the interface.
   - iphone_shot_4.jpg         Supporting imagery used in the interface.
 
-ADDITIONAL FILES (distributed separately — NOT on GitHub):
   - dummy_resourcing_data.xls     Sample resourcing data file for attendees
                                   to work with during the hands-on exercise.
 
@@ -73,15 +67,15 @@ ADDITIONAL FILES (distributed separately — NOT on GitHub):
 1. Open index6.html in your browser and share your screen (if remote) or
    project it (if in person).
 
-2. Walk attendees through the interface slides/sections in order. The tool
-   is designed to be navigated sequentially.
+2. Walk attendees through the interface slides/sections in order. 
 
 3. When you reach the resourcing exercise:
-     a. Distribute dummy_resourcing_data.xls to all attendees.
+     a. Point the students to their dummy_resourcing_data.xls file.
      b. Allow time for attendees to work through the exercise independently
-        or in small groups.
+        or in their pairs.
      c. Once the group has completed the exercise, use resource_data_solution.xls
-        to walk through the correct approach and answers.
+        to show your result. Remember there may be some differing measures of FTE. Just reiterate that people
+        will get different variation of the FTE measure code from Copilot - so don't stress. 
 
 4. Use the on-screen content to prompt discussion — the slides are designed
    to support, not replace, facilitated conversation.
@@ -99,10 +93,6 @@ IMAGES NOT LOADING IN THE BROWSER
 BROWSER COMPATIBILITY
   Use Chrome or Edge for best results. Safari may render some elements
   differently. Avoid Internet Explorer.
-
-SPREADSHEET WON'T OPEN
-  Ensure Microsoft Excel is installed. The .xls files are not compatible
-  with all versions of Numbers (Mac) without potential formatting issues.
 
 SCREEN SHARE SHOWING BLANK/BLACK
   If using screen share and the browser appears black, try sharing the
