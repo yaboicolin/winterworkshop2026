@@ -8,9 +8,9 @@ This repo contains static HTML materials for the AI Winter Workshop — a facili
 
 ## Development
 
-Open `index5.html` directly in a browser. No server needed — all assets are local (images referenced by filename). To preview changes, refresh the browser.
+Open `index6.html` directly in a browser. No server needed — all assets are local (images referenced by filename). To preview changes, refresh the browser.
 
-## Architecture: index5.html
+## Architecture: index6.html
 
 Everything lives in one file: CSS (`:root` CSS variables for theming), HTML (sections), and JavaScript (inline `<script>` at the bottom).
 
@@ -18,7 +18,7 @@ Everything lives in one file: CSS (`:root` CSS variables for theming), HTML (sec
 
 **Timer system:**
 - Global timer (120 min total): `startGlobal` / `pauseGlobal` / `resetGlobal` control a `setInterval` tick; displayed in the topbar chip.
-- Per-section timers: `initSectionTimer(el)` reads `data-duration` (seconds) from the section element and wires up `.sectionStart/.sectionPause/.sectionReset` buttons. Only the Inspiration section currently has a visible section timer.
+- Per-section timers: `initSectionTimer(el)` reads `data-duration` (seconds) from the section element and wires up `.sectionStart/.sectionPause/.sectionReset` buttons. Inspiration and Break sections have visible section timers.
 - Keyboard shortcuts: `g` toggles global start/pause, `r` resets global timer.
 
 **Copy button system (two modes):**
@@ -58,7 +58,7 @@ Enter your GitHub username and paste the token as the password when prompted.
 git remote set-url origin https://github.com/yaboicolin/winterworkshop2026.git
 ```
 
-**Long-term fix:** Run `brew install gh && gh auth login` to set up the GitHub CLI — after that, pushes work without tokens.
+**Status: Resolved.** `gh` is installed and configured as the git credential helper (`gh auth setup-git`). Pushes work without manual tokens.
 
 ## Session Log
 
@@ -73,3 +73,8 @@ git remote set-url origin https://github.com/yaboicolin/winterworkshop2026.git
 - Fixed welcome heading typo: "Winterschool" → "Winter Workshop"
 - Confirmed system timezone is correctly set to `Australia/Sydney` (AEST)
 - Committed and pushed all changes to `origin/main` (commit `4e7484d`), verified via GitHub MCP
+
+### 2026-05-26
+- Pulled latest `index6.html` from GitHub via MCP (GitHub version was 14 bytes ahead of local)
+- Added 5-min countdown timer (Start/Pause/Reset controls + clock chip) to the Micro-break section, positioned below "Refresh and reset" with spacing above the Next button
+- Updated CLAUDE.md: corrected file references from `index5.html` → `index6.html`, updated timer system note, resolved GitHub auth known issue
