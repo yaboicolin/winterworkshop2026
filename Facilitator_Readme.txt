@@ -31,6 +31,8 @@ Files you'll find in the folder for the HTML (lesson body):
   - iphone_shot_3.jpg         Supporting imagery used in the interface.
   - iphone_shot_4.jpg         Supporting imagery used in the interface.
 
+  - quiz-questions.txt        Quiz questions to Q&A ppl with (2 to 3 at a time) between activities.
+                                  
   - dummy_resourcing_data.xls     Sample resourcing data file for attendees
                                   to work with during the hands-on exercise.
 
