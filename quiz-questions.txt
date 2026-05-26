@@ -1,0 +1,64 @@
+Quiz questions for between the sections:
+
+Q: What does AI stand for?
+A: Artificial Intelligence
+
+Q: What does ML stand for?
+A: Machine Learning
+
+Q: What does NLP stand for?
+A: Natural Language Processing
+
+Q: What is Copilot?
+A: An AI assistant that helps users perform tasks, generate content, and automate workflows
+
+Q: What does RAG stand for in AI?
+A: Retrieval Augmented Generation
+
+Q: What is a prompt in the context of AI?
+A: The input or instruction given to an AI model to generate a response
+
+Q: What does API stand for?
+A: Application Programming Interface  
+Note: APIs allow different systems to talk to each other and exchange data in a structured way
+
+Q: What is the main purpose of an LLM?
+A: To understand and generate human-like text
+
+Q: What does fine-tuning mean in AI?
+A: Customising a pre-trained model with specific data to improve performance for a task
+
+Q: What is hallucination in AI?
+A: When an AI generates incorrect or fabricated information presented as fact
+
+Q: What is prompt engineering?
+A: The practice of designing inputs to get better outputs from AI models
+
+Q: What does SaaS stand for?
+A: Software as a Service
+
+Q: What is a use case?
+A: A specific scenario where a product or solution delivers value
+
+Q: What is the primary benefit of AI in business development?
+A: Faster insights, automation of tasks, and improved decision-making
+
+Q: what does LLM stand for?
+A: Large Language Model
+
+Q: what does GPT stand for?
+A: Generative Pre-trained Transformer
+
+Q: what is the upcoming AI tool in firm (currently in preview mode), that we will be able to use for business development?
+A: AiQ
+
+Q: What company has around ~27% profit share in OpenAI?
+A: Microsoft
+
+--- Trick questions ---
+
+Q: If an AI sounds confident, is it more likely to be correct?
+A: No. Confidence in tone does not equal accuracy
+
+Q: Does using more detailed prompts always improve AI output?
+A: Not always. Poorly structured or overly complex prompts can reduce quality
