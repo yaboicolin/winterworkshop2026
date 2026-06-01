@@ -1,8 +1,5 @@
 Quiz questions for between the sections:
 
-Q: What does AI stand for?
-A: Artificial Intelligence
-
 Q: What does ML stand for?
 A: Machine Learning
 
@@ -14,9 +11,6 @@ A: An AI assistant that helps users perform tasks, generate content, and automat
 
 Q: What does RAG stand for in AI?
 A: Retrieval Augmented Generation
-
-Q: What is a prompt in the context of AI?
-A: The input or instruction given to an AI model to generate a response
 
 Q: What does API stand for?
 A: Application Programming Interface  
@@ -50,7 +44,7 @@ Q: what does GPT stand for?
 A: Generative Pre-trained Transformer
 
 Q: what is the upcoming AI tool in firm (currently in preview mode), that we will be able to use for business development?
-A: AiQ
+A: AiQ Proposal Builder
 
 Q: What company has around ~27% profit share in OpenAI?
 A: Microsoft
