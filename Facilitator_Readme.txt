@@ -21,7 +21,7 @@ data exercise where attendees work with a provided excel spreadsheet.
 All files must be downloaded locally [i.e. in their downloads folder], in the same folder before opening the HTML file.
 
 Files you'll find in the folder for the HTML (lesson body):
-  - index6.html               Main workshop interface. Open this in a browser
+  - winterworkshop.html               Main workshop interface. Open this in a browser
                               to run the session.
   - governance_example.jpg    Supporting image used during the session.
   - kpmg_logo.png             Logo asset (light background).
