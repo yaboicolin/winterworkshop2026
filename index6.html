@@ -730,7 +730,7 @@
           <button data-target="copilot">
             <span class="nav-icon">💪</span>
             <span class="nav-label">Copilot Power Move</span>
-            <span class="nav-meta"><span class="badge">25m</span></span>
+            <span class="nav-meta"><span class="badge">20m</span></span>
           </button>
           <button data-target="break">
             <span class="nav-icon">☕</span>
@@ -740,7 +740,7 @@
           <button data-target="inspiration">
             <span class="nav-icon">✨</span>
             <span class="nav-label">Inspiration</span>
-            <span class="nav-meta"><span class="badge">35m</span></span>
+            <span class="nav-meta"><span class="badge">30m</span></span>
           </button>
           <button data-target="vibecode">
             <span class="nav-icon">🏔️</span>
@@ -750,7 +750,7 @@
           <button data-target="reflection">
             <span class="nav-icon">🎿</span>
             <span class="nav-label">Reflection</span>
-            <span class="nav-meta"><span class="badge">15m</span></span>
+            <span class="nav-meta"><span class="badge">10m</span></span>
           </button>
         </nav>
 
@@ -794,7 +794,7 @@
         <ul>
           <li>Optimise your tools for confidence and conciseness</li>
           <li>Work in pairs – switch out the driver & navigator between each go</li>
-          <li>Change up any source data or prompts to suit your needs. <b>No client data in this session though please.</b></li>
+          <li><b>No client data in this session please</b></li>
           <li>This is a safe space for learning - you can’t break anything, but bonus points if you do.</li>
         </ul>
         <button class="btn primary" data-nav-next="prepare-copilot">Next: Personalise your Copilot</button>
@@ -1019,7 +1019,7 @@
       <!-- Copilot Power Move -->
       <section id="copilot" class="card hidden" data-duration="1500">
         <div class="row">
-          <h2>💪❄️ Copilot Power Move (25 min)</h2>
+          <h2>💪❄️ Copilot Power Move (20 min)</h2>
           
         </div>
 
@@ -1030,7 +1030,7 @@
           <div class="fw700 mb6">Use Copilot to walk you through an excel power move</div>
           <div class="muted">
           <p>Backround: You are operating in an EPMO on a large tech transformation program. You've collated the forecasted resourcing hours, as provided by the program leads, for resources required to support upcoming delivery.</p>
-          <p>Task: An executive business stakeholder has requested that you provide the resourcing forecast as <b>Full Time Equivalent (FTE)</b> in a format that is 'governance ready' and is easily understandable. The information may be presented during an upcoming Steering Committee meeting.</p>
+          <p>Task: An executive business stakeholder has requested that you provide the resourcing forecast as <b>Full Time Equivalent (FTE) for an org that has standard 37.5 hour weeks</b> in a format that is 'governance ready' and is easily understandable. The information may be presented during an upcoming Steering Committee meeting.</p>
           <p>Let's do this: Use the forecasted hours that are provided in the workshop docs folder (the .xlsx file). YOU CHOOSE whether you would like to upload the entire file to Copilot, use the native Excel Copilot, or simply describe your source table to the Copilot app [recommended]. By the end of the activity, you will have produced a nice digestible FTE chart to enable data informed decision making for the client.</p> 
 
           <p>Tip: Best practice approach is converting the range to a proper table, then using PowerQuery to 'unpivot' the table this is because excel cannot pivot the data in the current human form. Then add the unpivoted data to a data model. Then create a DIM calendar from scratch. To create your DIM calendar, Copilot will give you the code to input into data model editor > advanced editor. Copilot will also give you the 'measures' required for inserting into your DIM calendar. You'll then add the DIM calendar to the data model. Then Create the table relationships and create your new pivot table and charts.</p> </div>
@@ -1043,7 +1043,7 @@
         <h3 class="mt">⛷️🤝⛷️ Pair challenge</h3>
         <ol>
           <li>Open the 'resourcing dummy data for AI workshop' dataset in Excel</li>
-          <li>Craft your prompt in Copilot. HINT: Describe the table fields as they are (Resource name, Team, Sub team, Program, etc.), then tell Copilot your end goal. Ask Copilot to help you with a basic DimCalendar, DAX measures and data model relationships. </li>
+          <li>Craft your prompt in Copilot. HINT: Describe the table fields as they are (Resource name, Team, Sub team, Program, etc.), then tell Copilot your end goal. Ask Copilot to help you format the data as a table, perform the unpivot and load to the model, create a basic DimCalendar, create the data model relationships and insert the necessary measures in the data model manager. </li>
 	      <li>Produce two one-page views: FTE demand, stacked by program for each month, then a chart for JUST the resource demand from the Finance business unit for the month of June, with individual resources on the bottom axis</li>
         </ol>
         <button class="btn primary" data-nav-next="break">Next: Break</button>
@@ -1139,9 +1139,9 @@
 
       <section id="inspiration" class="card hidden" data-duration="2100">
         <div class="row">
-          <h2>✨🏔️ Inspo: showcasing where our colleagues are using AI (35 min)</h2>
+          <h2>✨🏔️ Inspo: showcasing where our colleagues are using AI (30 min)</h2>
           <div class="section-controls">
-            <span class="chip time"><b class="sectionClock">35:00</b></span>
+            <span class="chip time"><b class="sectionClock">30:00</b></span>
             <div class="seg-ctrl">
               <button class="sectionStart">Start</button>
               <button class="sectionPause">Pause</button>
@@ -1186,9 +1186,9 @@
             HTML-Mogged by Claude Design
           </p>
           <ul>
-            <li>Claude Code + HTML/CSS/JS</li>
             <li>Built this entire workshop using Copilot AI</li>
-            <li><b>Now watch Claude Design critique the work..</b></li>
+            <li>Claude Design's savage take on my simple HTML/CSS/JS</li>
+            <li><b>Claude Design is a game changer for non-designers.</b></li>
           </ul>
         </div>
         <button class="btn primary" data-nav-next="vibecode">Next: Vibecode</button>
@@ -1196,28 +1196,39 @@
 
 
       <!-- Reflection -->
-      <section id="reflection" class="card hidden" data-duration="900">
-        <div class="row">
-          <h2>🎿 Wrap & Reflection (15 min)</h2>
-          
+      <section id="reflection" class="hidden" data-duration="900">
+        <div class="card">
+          <div class="row">
+            <h2>🎿 Wrap & Reflection (10 min)</h2>
+          </div>
+
+          <div class="grid2">
+            <div class="callout">
+              <div class="fw700">One thing that surprised me</div>
+              <p class="muted">One surprising thing i'll take away from this.</p>
+            </div>
+            <div class="callout">
+              <div class="fw700">One thing I’ll try next week</div>
+              <p class="muted">Name the task + tool + prompt idea.</p>
+            </div>
+            <div class="callout">
+              <div class="fw700">One workflow I want to improve or automate</div>
+              <p class="muted">Describe the input → output. Keep it simple.</p>
+            </div>
+            <div class="callout">
+              <div class="fw700">Shareback</div>
+              <p class="muted">Show your link/ slide/ screenshot. No explanations needed.</p>
+            </div>
+          </div>
         </div>
 
-        <div class="grid2">
-          <div class="callout">
-            <div class="fw700">One thing that surprised me</div>
-            <p class="muted">Write a 1–2 sentence takeaway.</p>
-          </div>
-          <div class="callout">
-            <div class="fw700">One thing I’ll try next week</div>
-            <p class="muted">Name the task + tool + prompt idea.</p>
-          </div>
-          <div class="callout">
-            <div class="fw700">One workflow I want to improve or automate</div>
-            <p class="muted">Describe the input → output. Keep it simple.</p>
-          </div>
-          <div class="callout">
-            <div class="fw700">Shareback</div>
-            <p class="muted">Show your link/ slide/ screenshot. No explanations needed.</p>
+        <div class="card" style="margin-top:1.5rem;">
+          <h2>Homework (own time)</h2>
+          <div class="grid2">
+            <div class="callout">
+              <div class="fw700">Use Copilot to help you create a simple HTML build</div>
+              <p class="muted">Find doc: AI workshop_homework_pack_mini_html_poc.docx</p>
+            </div>
           </div>
         </div>
       </section>
