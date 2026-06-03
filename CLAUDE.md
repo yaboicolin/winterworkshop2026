@@ -8,9 +8,9 @@ This repo contains static HTML materials for the AI Winter Workshop — a facili
 
 ## Development
 
-Open `index6.html` directly in a browser. No server needed — all assets are local (images referenced by filename). To preview changes, refresh the browser.
+Open `winterworkshop.html` directly in a browser. No server needed — all assets are local (images referenced by filename). To preview changes, refresh the browser.
 
-## Architecture: index6.html
+## Architecture: winterworkshop.html
 
 Everything lives in one file: CSS (`:root` CSS variables for theming), HTML (sections), and JavaScript (inline `<script>` at the bottom).
 
@@ -64,17 +64,17 @@ git remote set-url origin https://github.com/yaboicolin/winterworkshop2026.git
 
 ### 2026-05-23
 - Connected Claude Code to GitHub via MCP
-- Identified 2 modified files (`CLAUDE.md`, `index6.html`) and 6 untracked screenshots from the 22 May session
+- Identified 2 modified files (`CLAUDE.md`, `winterworkshop.html`) and 6 untracked screenshots from the 22 May session
 - Committed and pushed all local changes to `origin/main` (2 commits total, including the prior unpushed KPMG redesign)
 - Resolved GitHub push auth by installing `gh` (`brew install gh`) and completing device login at github.com/login/device
 - Configured `gh` as the git credential helper via `gh auth setup-git`
-- Added "Showcase 3 — Coen: HTML-Mogged by Claude Design" callout to `index6.html` Inspiration section
+- Added "Showcase 3 — Coen: HTML-Mogged by Claude Design" callout to `winterworkshop.html` Inspiration section
 - Extended Inspiration section timer from 25 min to 35 min (heading, chip, `data-duration`, sidebar badge)
 - Fixed welcome heading typo: "Winterschool" → "Winter Workshop"
 - Confirmed system timezone is correctly set to `Australia/Sydney` (AEST)
 - Committed and pushed all changes to `origin/main` (commit `4e7484d`), verified via GitHub MCP
 
 ### 2026-05-26
-- Pulled latest `index6.html` from GitHub via MCP (GitHub version was 14 bytes ahead of local)
+- Pulled latest `winterworkshop.html` from GitHub via MCP (GitHub version was 14 bytes ahead of local)
 - Added 5-min countdown timer (Start/Pause/Reset controls + clock chip) to the Micro-break section, positioned below "Refresh and reset" with spacing above the Next button
-- Updated CLAUDE.md: corrected file references from `index5.html` → `index6.html`, updated timer system note, resolved GitHub auth known issue
+- Updated CLAUDE.md: corrected file references from `index5.html` → `winterworkshop.html`, updated timer system note, resolved GitHub auth known issue
