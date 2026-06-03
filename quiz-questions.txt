@@ -49,6 +49,9 @@ A: AiQ Proposal Builder
 Q: What company has around ~27% profit share in OpenAI?
 A: Microsoft
 
+Q: What is an AI agent?
+A: A system that uses an AI model to autonomously plan and take actions — like browsing the web, running code, or calling tools — to complete a goal across multiple steps
+
 --- Trick questions ---
 
 Q: If an AI sounds confident, is it more likely to be correct?
