@@ -47,31 +47,38 @@ Files you'll find in the folder for the HTML (lesson body):
 3. PRE-SESSION SETUP
 --------------------------------------------------------------------------------
 
-1. Send around the folder of files listed in Section 2 [EXCEPT for
-   the resource_data_solution.xls file] to the students prior to the session.
-   Also download all the files and place them in the same folder
-   on your machine.
-
-2. Open index6.html in a modern browser (Chrome or Edge recommended) and
+1. Open winterworkshop.html in a web browser (Chrome or Edge recommended) and
    check that all images and content load correctly.
 
-3. Confirm that dummy_resourcing_data.xls opens without errors in Excel.
+2. Confirm that dummy_resourcing_data.xls opens without errors in Excel.
 
-4. Keep resource_data_solution.xls accessible but do not share it until the
+3. Keep resource_data_solution.xls accessible but do not share it until the
    appropriate point in the session (see Section 4).
 
-5. If presenting via screen share, test your setup in advance to ensure the
+4. If presenting via screen share, test your setup in advance to ensure the
    browser content is visible to all attendees.
+
+5. Send around the folder of files listed in Section 2 [EXCEPT for
+   the resource_data_solution.xls file] to the students prior to the session.
+   Let students know they should download, unzip the folder and save the files in the same folder
+   on their machines. 
+
+   
+    
 
 
 --------------------------------------------------------------------------------
 4. RUNNING THE SESSION
 --------------------------------------------------------------------------------
 
-1. Open index6.html in your browser and share your screen (if remote) or
-   project it (if in person).
+1. Sites to load up as context setteers for the session:
+    https://kpmgaust.sharepoint.com/sites/au-oi-comms/SitePages/Doubling-Down-on-Microsoft-Agentic-AI.aspx
+    https://www.anthropic.com/news/anthropic-kpmg
+    https://kpmg.com/xx/en/media/press-releases/2026/05/kpmg-and-anthropic-sign-global-alliance-and-launch-digital-gateway-powered-by-claude.html
 
-2. Walk attendees through the interface slides/sections in order. 
+1. Also open winterworkshop.html in your browser and share on the room's projector.
+
+2. Walk attendees through the sections in order. 
 
 3. When you reach the resourcing exercise:
      a. Point the students to their dummy_resourcing_data.xls file.
@@ -83,6 +90,7 @@ Files you'll find in the folder for the HTML (lesson body):
 
 4. Use the on-screen content to prompt discussion — the slides are designed
    to support, not replace, facilitated conversation.
+
 
 
 --------------------------------------------------------------------------------
